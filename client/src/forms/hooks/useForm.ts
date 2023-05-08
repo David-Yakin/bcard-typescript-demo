@@ -9,7 +9,7 @@ const useForm = <TForm extends Record<string, unknown>>(
   handleSubmit: HandleSubmit
 ) => {
   const [data, setData] = useState(initialForm);
-  const [errors, setErrors] = useState<{} | TForm>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleReset = useCallback(() => {
     setData(initialForm);
@@ -35,7 +35,7 @@ const useForm = <TForm extends Record<string, unknown>>(
       if (errorMessage) setErrors(prev => ({ ...prev, [name]: errorMessage }));
       else
         setErrors(prev => {
-          let obj: Record<string, unknown> = { ...prev };
+          let obj: Record<string, string> = { ...prev };
           delete obj[name];
           return obj;
         });

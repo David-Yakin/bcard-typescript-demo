@@ -11,7 +11,7 @@ type Props = {
   label: string;
   required?: boolean;
   error: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 const Input: FC<Props> = ({
@@ -22,7 +22,7 @@ const Input: FC<Props> = ({
   label,
   required = true,
   error,
-  onChange,
+  onInputChange,
   ...rest
 }) => {
   return (
@@ -37,7 +37,7 @@ const Input: FC<Props> = ({
         required={required}
         helperText={error}
         error={Boolean(error)}
-        onChange={onChange}
+        onChange={onInputChange}
         fullWidth
         autoComplete="off"
       />
