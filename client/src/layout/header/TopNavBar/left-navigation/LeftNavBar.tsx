@@ -4,8 +4,11 @@ import Logo from "../Logo/Logo";
 import LogoIcon from "../Logo/LogoIcon";
 import NavItem from "../../../components/NavItem";
 import ROUTES from "../../../../routes/routesModel";
+import { useUser } from "../../../../users/providers/UserProvider";
 
 const LeftNavBar = () => {
+  const { user } = useUser();
+
   return (
     <Box>
       <LogoIcon />
@@ -13,9 +16,16 @@ const LeftNavBar = () => {
 
       <Box sx={{ display: { xs: "none", md: "inline-flex" } }}>
         <NavItem to={ROUTES.ABOUT} label="about" />
-        <NavItem to={ROUTES.MY_CARDS} label="my cards" />
-        <NavItem to={ROUTES.FAV_CARDS} label="fav cards" />
-        <NavItem to={ROUTES.SANDBOX} label="sandbox" />
+        {user && (
+          <>
+            <NavItem to={ROUTES.MY_CARDS} label="my cards" />
+            <NavItem to={ROUTES.FAV_CARDS} label="fav cards" />
+          </>
+        )}
+
+        {user && user.isAdmin && (
+          <NavItem to={ROUTES.SANDBOX} label="sandbox" />
+        )}
       </Box>
     </Box>
   );

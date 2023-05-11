@@ -24,6 +24,7 @@ import ContextMenu from "../sandbox/context/ContextMenu";
 import A from "../sandbox/context/components/A";
 import SnackExample from "../sandbox/context/SnackExample";
 import FormTest from "../sandbox/forms/FormTest";
+import LoginPage from "../users/pages/LoginPage";
 
 const Router = () => {
   return (
@@ -36,6 +37,7 @@ const Router = () => {
       />
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
       <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
+      <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route path={ROUTES.SANDBOX} element={<Sandbox />}>
         <Route path="lifecycle" element={<LifeCycleHooks />}>
           <Route path="initial" element={<InitialCycle />} />

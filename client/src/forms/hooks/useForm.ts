@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo, ChangeEvent } from "react";
 import Joi, { PartialSchemaMap } from "joi";
 
-type HandleSubmit = (dataObject: Record<string, unknown>) => void;
+type HandleSubmit = (data: any) => void | Promise<void>;
 
 const useForm = <TForm extends Record<string, unknown>>(
   initialForm: TForm,

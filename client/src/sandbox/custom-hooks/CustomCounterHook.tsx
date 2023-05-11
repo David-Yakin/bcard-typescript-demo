@@ -25,7 +25,6 @@
 
 // export default CustomCounterHook;
 
-import React from "react";
 import useCounter from "./useCounter";
 
 const CustomCounterHook = () => {

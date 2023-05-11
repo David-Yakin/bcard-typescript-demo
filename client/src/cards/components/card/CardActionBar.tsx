@@ -5,24 +5,31 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CallIcon from "@mui/icons-material/Call";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useUser } from "../../../users/providers/UserProvider";
 
-type CardActionBarProps = { cardId: string };
+type CardActionBarProps = { cardId: string; cardUserId: string };
 
-const CardActionBar = ({ cardId }: CardActionBarProps) => {
+const CardActionBar = ({ cardId, cardUserId }: CardActionBarProps) => {
+  const { user } = useUser();
+
   return (
     <CardActions disableSpacing sx={{ pt: 0, justifyContent: "space-between" }}>
       <Box>
-        <IconButton
-          aria-label="delete card"
-          onClick={() => console.log(`you deleted card no: ${cardId}`)}>
-          <DeleteIcon />
-        </IconButton>
+        {user && (user._id === cardUserId || user.isAdmin) && (
+          <IconButton
+            aria-label="delete card"
+            onClick={() => console.log(`you deleted card no: ${cardId}`)}>
+            <DeleteIcon />
+          </IconButton>
+        )}
 
-        <IconButton
-          aria-label="edit card"
-          onClick={() => console.log(`you edit card no: ${cardId}`)}>
-          <EditIcon />
-        </IconButton>
+        {user?._id === cardUserId && (
+          <IconButton
+            aria-label="edit card"
+            onClick={() => console.log(`you edit card no: ${cardId}`)}>
+            <EditIcon />
+          </IconButton>
+        )}
       </Box>
 
       <Box>
@@ -30,11 +37,13 @@ const CardActionBar = ({ cardId }: CardActionBarProps) => {
           <CallIcon />
         </IconButton>
 
-        <IconButton
-          aria-label="add to fav"
-          onClick={() => console.log(`you liked card no: ${cardId}`)}>
-          <FavoriteIcon />
-        </IconButton>
+        {user && (
+          <IconButton
+            aria-label="add to fav"
+            onClick={() => console.log(`you liked card no: ${cardId}`)}>
+            <FavoriteIcon />
+          </IconButton>
+        )}
       </Box>
     </CardActions>
   );

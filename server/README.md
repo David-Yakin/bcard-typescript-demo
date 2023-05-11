@@ -65,12 +65,12 @@ In the request body you will need to provide an object with the following keys a
 |            |         | url         | string | 14  |     |          |
 |            |         | alt         | string | 2   | 256 |          |
 | address    | object  |             |        |     |     | required |
-|            |         | state       |        | 2   | 256 |          |
-|            |         | country     |        | 2   | 256 | required |
-|            |         | city        |        | 2   | 256 | required |
-|            |         | street      |        | 2   | 256 | required |
-|            |         | houseNumber |        | 2   | 256 | required |
-|            |         | zip         |        | 2   | 256 | required |
+|            |         | state       | string | 2   | 256 |          |
+|            |         | country     | string | 2   | 256 | required |
+|            |         | city        | string | 2   | 256 | required |
+|            |         | street      | string | 2   | 256 | required |
+|            |         | houseNumber | number | 2   | 256 | required |
+|            |         | zip         | number | 2   | 256 | required |
 | isBusiness | boolean |             |        |     |     | required |
 
 - "password" must be at least nine characters long and contain an uppercase letter, a lowercase letter, a number and one of the following characters !@#$%^&\*-
@@ -84,7 +84,7 @@ In the request body you will need to provide an object with the following keys a
   POST /api/users/login
 ```
 
-#### Request
+### Request
 
 In the request body you will need to provide an object with the following keys and values
 
@@ -96,13 +96,23 @@ In the request body you will need to provide an object with the following keys a
 - "email" must be a standard email
 - "password" must be at least nine characters long and contain an uppercase letter, a lowercase letter, a number and one of the following characters !@#$%^&\*-
 
+### Response
+
+If the user is in the database and the password sent is correct, a token will be returned and the following object can be extracted from it with the help of the jwt-decode library
+
+| index      | type    |
+| ---------- | ------- |
+| \_id       | string  |
+| isBusiness | boolean |
+| isAdmin    | boolean |
+
 #### API for Information about all the users
 
 ```http
   GET /api/users
 ```
 
-#### Request:
+### Request
 
 - You will need to provide a token to get an answer from this api
 - You will need to be Admin type user to get an answer from this api
@@ -113,7 +123,7 @@ In the request body you will need to provide an object with the following keys a
   GET /api/users/:id
 ```
 
-#### Request:
+### Request
 
 - You will need to provide a token to get an answer from this api
 - You will need to be the registered user or Admin type user to get an answer from this api
@@ -124,7 +134,7 @@ In the request body you will need to provide an object with the following keys a
   PUT /api/users/:id
 ```
 
-#### Request
+### Request
 
 In the request body you will need to provide an object with the following keys and values
 
@@ -202,7 +212,7 @@ In the request body you will need to provide an object with the following keys a
   POST /api/cards/
 ```
 
-#### Request
+### Request
 
 In the request body you will need to provide an object with the following keys and values
 
@@ -238,7 +248,7 @@ In the request body you will need to provide an object with the following keys a
   PUT /api/cards/:id
 ```
 
-#### Request
+### Request
 
 In the request body you will need to provide an object with the following keys and values
 

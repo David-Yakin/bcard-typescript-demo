@@ -23,7 +23,7 @@ const Card: React.FC<CardProps> = ({ card }) => {
         <CardBody card={card} />
       </CardActionArea>
 
-      <CardActionBar cardId={card._id} />
+      <CardActionBar cardId={card._id} cardUserId={card.user_id} />
     </MuiCard>
   );
 };

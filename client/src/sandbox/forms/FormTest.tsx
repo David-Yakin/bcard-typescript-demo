@@ -8,8 +8,8 @@ import ROUTES from "../../routes/routesModel";
 
 const FormTest = () => {
   type Data = {
-    first?: string;
-    last?: string;
+    first: string;
+    last: string;
   };
 
   const INITIAL_FORM = {
