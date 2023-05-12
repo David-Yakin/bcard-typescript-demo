@@ -16,7 +16,7 @@ const Card: React.FC<CardProps> = ({ card }) => {
   const navigate = useNavigate();
 
   return (
-    <MuiCard sx={{ minWidth: 280 }}>
+    <MuiCard sx={{ minWidth: 280 }} elevation={4}>
       <CardActionArea
         onClick={() => navigate(`${ROUTES.CARD_DETAILS}/${card._id}`)}>
         <CardHead image={card.image} />

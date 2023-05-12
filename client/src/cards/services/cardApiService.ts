@@ -22,7 +22,6 @@ export const getMyCards = async () => {
     return Promise.resolve(data);
   } catch (error) {
     if (axios.isAxiosError(error)) return Promise.reject(error.message);
-    console.error(error);
     return Promise.reject("An unexpected error occurred!");
   }
 };
@@ -31,7 +30,7 @@ export const createCard = async (normalizedCard: object) => {
   try {
     const { data } = await axios.post(`${apiUrl}/cards`, normalizedCard);
     return data;
-  } catch (error: any) {
+  } catch (error) {
     if (axios.isAxiosError(error)) return Promise.reject(error.message);
   }
 };

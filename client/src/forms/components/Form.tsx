@@ -12,7 +12,7 @@ type Props = {
   onSubmit: () => void;
   onReset: () => void;
   onFormChange: () => Joi.ValidationError | null;
-  to: string;
+  to?: string;
   color?:
     | "inherit"
     | "primary"

@@ -1,13 +1,17 @@
-import React from "react";
+import React, { FC } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import { func } from "prop-types";
 
-const MoreButton = () => {
+type Props = {
+  onClick: () => void;
+};
+
+const MoreButton: FC<Props> = ({ onClick }) => {
   return (
     <Box sx={{ display: { xs: "inline-flex", md: "none" } }}>
       <IconButton
+        onClick={onClick}
         size="large"
         color="inherit"
         aria-label="menu"
@@ -16,10 +20,6 @@ const MoreButton = () => {
       </IconButton>
     </Box>
   );
-};
-
-MoreButton.propTypes = {
-  onClick: func.isRequired,
 };
 
 export default MoreButton;

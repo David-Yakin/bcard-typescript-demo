@@ -12,7 +12,7 @@ const Main: React.FC<Props> = ({ children }) => {
     <Paper
       sx={{
         minHeight: "90vh",
-        backgroundColor: !isDark ? "#e3f2fd" : "#333333",
+        backgroundColor: !isDark ? "#ffffff" : "#333333",
       }}>
       {children}
     </Paper>

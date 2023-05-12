@@ -1,25 +1,33 @@
 import React from "react";
 import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
 import LeftNavBar from "./left-navigation/LeftNavBar";
 import RightNavBar from "./right-navigation/RightNavBar";
 import SearchBar from "./search-bar/SearchBar";
 import { MenuProvider } from "./menu/MenuProvider";
+import Container from "@mui/material/Container";
 
 export const NavBar = () => {
   return (
     <MenuProvider>
       <AppBar position="sticky">
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <LeftNavBar />
+        <Container>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              py: 1,
+              alignItems: "center",
+            }}>
+            <LeftNavBar />
 
-          <Box sx={{ display: { xs: "inline-flex", md: "none" } }}>
-            <SearchBar />
+            <Box sx={{ display: { xs: "inline-flex", md: "none" } }}>
+              <SearchBar />
+            </Box>
+
+            <RightNavBar />
           </Box>
-
-          <RightNavBar />
-        </Toolbar>
+        </Container>
       </AppBar>
     </MenuProvider>
   );

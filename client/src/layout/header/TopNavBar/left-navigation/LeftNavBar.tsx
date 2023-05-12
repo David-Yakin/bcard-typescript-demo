@@ -16,11 +16,9 @@ const LeftNavBar = () => {
 
       <Box sx={{ display: { xs: "none", md: "inline-flex" } }}>
         <NavItem to={ROUTES.ABOUT} label="about" />
-        {user && (
-          <>
-            <NavItem to={ROUTES.MY_CARDS} label="my cards" />
-            <NavItem to={ROUTES.FAV_CARDS} label="fav cards" />
-          </>
+        {user && <NavItem to={ROUTES.FAV_CARDS} label="fav cards" />}
+        {user && user.isBusiness && (
+          <NavItem to={ROUTES.MY_CARDS} label="my cards" />
         )}
 
         {user && user.isAdmin && (

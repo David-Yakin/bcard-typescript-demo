@@ -9,12 +9,11 @@ import {
 import { useUser } from "../providers/UserProvider";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "./../../routes/routesModel";
-import { Login, TokenType } from "../models/types/userType";
-import axios, { AxiosError } from "axios";
-// import normalizeUser from "../helpers/normalization/normalizeUser";
+import { Login, RegistrationForm, TokenType } from "../models/types/userType";
+import normalizeUser from "../helpers/normalization/normalizeUser";
 
 const useHandleUsers = () => {
-  const [error, setError] = useState<null | string | AxiosError>(null);
+  const [error, setError] = useState<null | string>(null);
   const [isLoading, setLoading] = useState(false);
 
   useAxios();
@@ -24,7 +23,7 @@ const useHandleUsers = () => {
   const requestStatus = useCallback(
     (
       loading: boolean,
-      errorMessage: string | null | AxiosError,
+      errorMessage: string | null,
       user: null | TokenType = null
     ) => {
       setLoading(loading);
@@ -45,8 +44,7 @@ const useHandleUsers = () => {
         requestStatus(false, null, userFromLocalStorage);
         navigate(ROUTES.CARDS);
       } catch (error) {
-        if (axios.isAxiosError(error) || typeof error === "string")
-          requestStatus(false, error, null);
+        if (typeof error === "string") requestStatus(false, error, null);
       }
     },
     [navigate, requestStatus, setToken]
@@ -57,22 +55,22 @@ const useHandleUsers = () => {
     setUser(null);
   }, [setUser]);
 
-  //   const handleSignup = useCallback(
-  //     async user => {
-  //       try {
-  //         setLoading(true);
-  //         const normalizedUser = normalizeUser(user);
-  //         await signup(normalizedUser);
-  //         await handleLogin({
-  //           email: user.email,
-  //           password: user.password,
-  //         });
-  //       } catch (error) {
-  //         requestStatus(false, error, null);
-  //       }
-  //     },
-  //     [handleLogin, requestStatus]
-  //   );
+  const handleSignup = useCallback(
+    async (user: RegistrationForm) => {
+      try {
+        setLoading(true);
+        const normalizedUser = normalizeUser(user);
+        await signup(normalizedUser);
+        await handleLogin({
+          email: user.email,
+          password: user.password,
+        });
+      } catch (error) {
+        if (typeof error === "string") requestStatus(false, error, null);
+      }
+    },
+    [handleLogin, requestStatus]
+  );
 
   const value = useMemo(() => {
     return { isLoading, error, user };
@@ -82,7 +80,7 @@ const useHandleUsers = () => {
     value,
     handleLogin,
     handleLogout,
-    // handleSignup,
+    handleSignup,
   };
 };
 

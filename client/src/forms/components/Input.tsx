@@ -3,6 +3,8 @@ import TextField from "@mui/material/TextField";
 import { makeFirstLetterCapital } from "../utils/algoMethods";
 import Grid from "@mui/material/Grid";
 
+type BreakPoints = "xs" | "sm" | "md" | "lg" | "xl";
+
 type Props = {
   variant?: "filled" | "outlined" | "standard";
   type?: string;
@@ -10,8 +12,9 @@ type Props = {
   data: Record<string, unknown>;
   label: string;
   required?: boolean;
-  error: string;
+  error?: string;
   onInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  breakPoints?: Partial<Record<BreakPoints, number>>;
 };
 
 const Input: FC<Props> = ({
@@ -23,10 +26,10 @@ const Input: FC<Props> = ({
   required = true,
   error,
   onInputChange,
-  ...rest
+  breakPoints = { xl: 12 },
 }) => {
   return (
-    <Grid item xs={12} {...rest}>
+    <Grid item xs={12} {...breakPoints}>
       <TextField
         variant={variant}
         label={makeFirstLetterCapital(label)}
