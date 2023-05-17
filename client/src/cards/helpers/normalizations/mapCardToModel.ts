@@ -1,8 +1,9 @@
 import CardInterface from "../../models/interfaces/CardInterface";
-import { CardFromClientType } from "../../models/types/cardTypes";
+import { CardMapToModelType } from "../../models/types/cardTypes";
 
-const mapCardToModel = (card: CardInterface): CardFromClientType => {
+const mapCardToModel = (card: CardInterface): CardMapToModelType => {
   return {
+    _id: card._id,
     title: card.title,
     subtitle: card.subtitle,
     description: card.description,
@@ -17,6 +18,8 @@ const mapCardToModel = (card: CardInterface): CardFromClientType => {
     street: card.address.street,
     houseNumber: String(card.address.houseNumber!),
     zip: String(card.address.zip!),
+    user_id: card.user_id,
+    bizNumber: card.bizNumber,
   };
 };
 

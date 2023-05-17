@@ -2,32 +2,28 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useForm from "../../forms/hooks/useForm";
 import initialCardForm from "../helpers/initialForms/initialCreateCardObject";
-import cardSchema from "../models/Joi/cardSchema";
 import useCards from "../hooks/useCards";
 import { useUser } from "../../users/providers/UserProvider";
 import { useNavigate, Navigate } from "react-router-dom";
 import ROUTES from "../../routes/routesModel";
 import { Container } from "@mui/material";
 import mapCardToModel from "../helpers/normalizations/mapCardToModel";
-import normalizeCard from "./../helpers/normalizations/normalizeCard";
 import CardForm from "../components/CardForm";
+import cardEditSchema from "../models/Joi/cardEditSchema";
 
 const EditCardPage = () => {
   const { user } = useUser();
   const { cardId } = useParams();
-  const {
-    handleUpdateCard,
-    handleGetCard,
-    value: { card },
-  } = useCards();
+  const { handleUpdateCard, handleGetCard } = useCards();
 
   const navigate = useNavigate();
 
   const { value, ...rest } = useForm(
     initialCardForm,
-    cardSchema,
+    cardEditSchema,
     handleUpdateCard
   );
+
   const { data, errors } = value;
   const { handleInputChange, handleReset, onSubmit, setData, validateForm } =
     rest;

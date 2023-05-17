@@ -1,5 +1,6 @@
 import axios from "axios";
 import CardInterface from "../models/interfaces/CardInterface";
+import { NormalizedEditCard } from "../models/types/cardTypes";
 
 const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:8181";
 
@@ -56,11 +57,13 @@ export const deleteCard = async (cardId: string) => {
   }
 };
 
-export const editCard = async (cardId: string, normalizedCard: object) => {
+export const editCard = async (normalizedCard: NormalizedEditCard) => {
   try {
+    const cardToServer = { ...normalizedCard };
+    delete cardToServer._id;
     const { data } = await axios.put<CardInterface>(
-      `${apiUrl}/cards/${cardId}`,
-      normalizedCard
+      `${apiUrl}/cards/${normalizedCard._id}`,
+      cardToServer
     );
     return data;
   } catch (error) {

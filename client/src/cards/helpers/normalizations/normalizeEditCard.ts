@@ -1,7 +1,8 @@
-import { CardFromClientType } from "../../models/types/cardTypes";
+import { CardMapToModelType } from "../../models/types/cardTypes";
 
-const normalizeCard = (card: CardFromClientType) => {
+const normalizeEditCard = (card: CardMapToModelType) => {
   return {
+    _id: card._id,
     title: card.title,
     subtitle: card.subtitle,
     description: card.description,
@@ -20,7 +21,9 @@ const normalizeCard = (card: CardFromClientType) => {
       houseNumber: +card.houseNumber,
       zip: +card.zip,
     },
+    bizNumber: card.bizNumber,
+    user_id: card.user_id,
   };
 };
 
-export default normalizeCard;
+export default normalizeEditCard;

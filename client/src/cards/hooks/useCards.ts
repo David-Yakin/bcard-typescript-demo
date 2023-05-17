@@ -14,7 +14,11 @@ import { useSnack } from "../../providers/SnackbarProvider";
 import ROUTES from "../../routes/routesModel";
 import CardInterface from "../models/interfaces/CardInterface";
 import normalizeCard from "../helpers/normalizations/normalizeCard";
-import { CardFromClientType } from "../models/types/cardTypes";
+import {
+  CardFromClientType,
+  CardMapToModelType,
+} from "../models/types/cardTypes";
+import normalizeEditCard from "../helpers/normalizations/normalizeEditCard";
 
 type CardsType = null | CardInterface[];
 type CardType = null | CardInterface;
@@ -101,16 +105,11 @@ const useCards = () => {
   }, []);
 
   const handleUpdateCard = useCallback(
-    async (cardFromClient: CardFromClientType) => {
+    async (cardFromClient: CardMapToModelType) => {
       try {
         setLoading(true);
-        const normalizedCard = normalizeCard(cardFromClient);
-        const cardToServer = {
-          ...normalizedCard,
-          bizNumber: card!.bizNumber,
-          user_id: card!.user_id,
-        };
-        const cardFomServer = await editCard(card!._id, cardToServer);
+        const normalizedCard = normalizeEditCard(cardFromClient);
+        const cardFomServer = await editCard(normalizedCard);
         requestStatus(false, null, null, cardFomServer);
         snack("success", "The business card has been successfully updated");
         navigate(ROUTES.MY_CARDS);
