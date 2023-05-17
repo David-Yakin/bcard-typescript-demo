@@ -7,12 +7,17 @@ import useCards from "../hooks/useCards";
 type CardsPageProps = {};
 
 const CardsPage: React.FC<CardsPageProps> = () => {
-  const { value, handleGetCards } = useCards();
+  const { value, handleGetCards, handleDeleteCard } = useCards();
   const { cards, error, isLoading } = value;
 
   useEffect(() => {
     handleGetCards();
   }, []);
+
+  const onDeleteCard = async (cardId: string) => {
+    await handleDeleteCard(cardId);
+    await handleGetCards();
+  };
 
   return (
     <Container>
@@ -20,7 +25,12 @@ const CardsPage: React.FC<CardsPageProps> = () => {
         title="Cards Page"
         subtitle="On this page you can find all business cards form all categories"
       />
-      <CardsFeedback cards={cards} error={error} isLoading={isLoading} />
+      <CardsFeedback
+        cards={cards}
+        error={error}
+        isLoading={isLoading}
+        onDelete={onDeleteCard}
+      />
     </Container>
   );
 };

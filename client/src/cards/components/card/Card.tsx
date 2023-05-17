@@ -6,13 +6,14 @@ import CardBody from "./CardBody";
 import CardActionBar from "./CardActionBar";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../../routes/routesModel";
-import CardInterface from "../../interfaces/CardInterface";
+import CardInterface from "../../models/interfaces/CardInterface";
 
 type CardProps = {
   card: CardInterface;
+  onDelete: (id: string) => void;
 };
 
-const Card: React.FC<CardProps> = ({ card }) => {
+const Card: React.FC<CardProps> = ({ card, onDelete }) => {
   const navigate = useNavigate();
 
   return (
@@ -23,7 +24,11 @@ const Card: React.FC<CardProps> = ({ card }) => {
         <CardBody card={card} />
       </CardActionArea>
 
-      <CardActionBar cardId={card._id} cardUserId={card.user_id} />
+      <CardActionBar
+        cardId={card._id}
+        cardUserId={card.user_id}
+        onDelete={onDelete}
+      />
     </MuiCard>
   );
 };

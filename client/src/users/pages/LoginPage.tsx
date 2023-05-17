@@ -9,6 +9,7 @@ import loginSchema from "../models/Joi/loginSchema";
 import Container from "@mui/material/Container";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
+import FormLink from "../../forms/components/FormLink";
 
 const LoginPage = () => {
   const { user } = useUser();
@@ -42,7 +43,7 @@ const LoginPage = () => {
           name="email"
           type="email"
           error={value.errors.email}
-          onInputChange={rest.handleChange}
+          onInputChange={rest.handleInputChange}
           data={value.data}
         />
         <Input
@@ -50,9 +51,10 @@ const LoginPage = () => {
           name="password"
           type="password"
           error={value.errors.password}
-          onInputChange={rest.handleChange}
+          onInputChange={rest.handleInputChange}
           data={value.data}
         />
+        <FormLink text="Did not registered yet?" to={ROUTES.SIGNUP} />
       </Form>
     </Container>
   );

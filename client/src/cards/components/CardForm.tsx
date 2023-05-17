@@ -1,28 +1,23 @@
 import React, { FC, ChangeEvent } from "react";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Grid from "@mui/material/Grid";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
-import ROUTES from "../../routes/routesModel";
 import Joi from "joi";
 import {
-  RegistrationForm,
-  RegistrationFormErrors,
-} from "../models/types/userType";
-import FormLink from "../../forms/components/FormLink";
+  CardFromClientType,
+  CreateCardErrors,
+} from "../models/types/cardTypes";
 
 type Props = {
   title?: string;
   onSubmit: () => void;
   onReset: () => void;
   onFormChange: () => Joi.ValidationError | null;
-  errors: RegistrationFormErrors;
-  data: RegistrationForm;
+  errors: CreateCardErrors;
+  data: CardFromClientType;
   onInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  setData: (data: RegistrationForm) => void;
 };
-const UserForm: FC<Props> = ({
+
+const CardForm: FC<Props> = ({
   onSubmit,
   onReset,
   onFormChange,
@@ -30,7 +25,6 @@ const UserForm: FC<Props> = ({
   errors,
   data,
   onInputChange,
-  setData,
 }) => {
   return (
     <Form
@@ -39,28 +33,27 @@ const UserForm: FC<Props> = ({
       onFormChange={onFormChange}
       styles={{ maxWidth: "800px" }}
       title={title}
-      to={ROUTES.CARDS}>
+      spacing={1}>
       <Input
-        name="first"
-        label="first name"
-        error={errors.first}
+        name="title"
+        label="title"
+        error={errors.title}
         onInputChange={onInputChange}
         data={data}
         breakPoints={{ sm: 6 }}
       />
       <Input
-        name="middle"
-        label="middle name"
-        error={errors.middle}
+        name="subtitle"
+        label="subtitle"
+        error={errors.subtitle}
         onInputChange={onInputChange}
         data={data}
         breakPoints={{ sm: 6 }}
-        required={false}
       />
       <Input
-        name="last"
-        label="last name"
-        error={errors.last}
+        name="description"
+        label="description"
+        error={errors.description}
         onInputChange={onInputChange}
         data={data}
         breakPoints={{ sm: 6 }}
@@ -84,27 +77,27 @@ const UserForm: FC<Props> = ({
         breakPoints={{ sm: 6 }}
       />
       <Input
-        name="password"
-        label="password"
-        type="password"
-        error={errors.password}
-        onInputChange={onInputChange}
-        data={data}
-        breakPoints={{ sm: 6 }}
-      />
-      <Input
-        name="url"
-        label="image url"
-        error={errors.url}
+        name="webUrl"
+        label="web"
+        error={errors.webUrl}
         onInputChange={onInputChange}
         data={data}
         breakPoints={{ sm: 6 }}
         required={false}
       />
       <Input
-        name="alt"
+        name="imageUrl"
+        label="image url"
+        error={errors.imageUrl}
+        onInputChange={onInputChange}
+        data={data}
+        breakPoints={{ sm: 6 }}
+        required={false}
+      />
+      <Input
+        name="imageAlt"
         label="image alt"
-        error={errors.alt}
+        error={errors.imageAlt}
         onInputChange={onInputChange}
         data={data}
         breakPoints={{ sm: 6 }}
@@ -120,8 +113,8 @@ const UserForm: FC<Props> = ({
         required={false}
       />
       <Input
-        label="country"
         name="country"
+        label="country"
         error={errors.country}
         onInputChange={onInputChange}
         data={data}
@@ -145,7 +138,7 @@ const UserForm: FC<Props> = ({
       />
       <Input
         name="houseNumber"
-        label="house Number"
+        label="houseNumber"
         type="number"
         error={errors.houseNumber}
         onInputChange={onInputChange}
@@ -155,29 +148,15 @@ const UserForm: FC<Props> = ({
       <Input
         name="zip"
         label="zip"
+        type="number"
         error={errors.zip}
         onInputChange={onInputChange}
         data={data}
         breakPoints={{ sm: 6 }}
+        required={false}
       />
-      <Grid item>
-        <FormControlLabel
-          name="isBusiness"
-          control={
-            <Checkbox
-              value={data.isBusiness}
-              color="primary"
-              onChange={e =>
-                setData({ ...data, isBusiness: !!e.target.checked })
-              }
-            />
-          }
-          label="Signup as business"
-        />
-      </Grid>
-      <FormLink text="Already registered?" to={ROUTES.LOGIN} />
     </Form>
   );
 };
 
-export default React.memo(UserForm);
+export default React.memo(CardForm);

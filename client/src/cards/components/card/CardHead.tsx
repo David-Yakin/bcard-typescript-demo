@@ -1,6 +1,6 @@
 import React from "react";
 import CardMedia from "@mui/material/CardMedia";
-import ImageInterface from "../../interfaces/ImageInterface";
+import ImageInterface from "../../models/interfaces/ImageInterface";
 
 type CardHeadProps = {
   image: ImageInterface;

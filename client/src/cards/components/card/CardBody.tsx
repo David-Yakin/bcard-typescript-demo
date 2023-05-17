@@ -3,7 +3,7 @@ import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import { Divider, Box } from "@mui/material";
 import CardRow from "./CardRow";
-import CardInterface from "../../interfaces/CardInterface";
+import CardInterface from "../../models/interfaces/CardInterface";
 
 type CardBodyProps = {
   card: CardInterface;

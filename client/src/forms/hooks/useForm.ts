@@ -28,7 +28,7 @@ const useForm = <TForm extends Record<string, unknown>>(
     [schema]
   );
 
-  const handleChange = useCallback(
+  const handleInputChange = useCallback(
     ({ target }: ChangeEvent<HTMLInputElement>) => {
       const { name, value } = target;
       const errorMessage = validateProperty(target);
@@ -63,7 +63,7 @@ const useForm = <TForm extends Record<string, unknown>>(
   return {
     value,
     onSubmit,
-    handleChange,
+    handleInputChange,
     handleReset,
     validateForm,
     setData,

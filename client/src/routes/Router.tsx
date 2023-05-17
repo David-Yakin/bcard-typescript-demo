@@ -25,16 +25,22 @@ import A from "../sandbox/context/components/A";
 import SnackExample from "../sandbox/context/SnackExample";
 import FormTest from "../sandbox/forms/FormTest";
 import LoginPage from "../users/pages/LoginPage";
+import MyCardsPage from "../cards/pages/MyCardsPage";
+import CreateCardPage from "../cards/pages/CreateCardPage";
+import EditCardPage from "../cards/pages/EditCardPage";
 
 const Router = () => {
   return (
     <Routes>
       <Route path={ROUTES.ROOT} element={<CardsPage />} />
       <Route path={ROUTES.CARDS} element={<CardsPage />} />
+      <Route path={ROUTES.MY_CARDS} element={<MyCardsPage />} />
       <Route
         path={`${ROUTES.CARD_DETAILS}/:cardId`}
         element={<CardDetailsPage />}
       />
+      <Route path={ROUTES.CREATE_CARD} element={<CreateCardPage />} />
+      <Route path={`${ROUTES.EDIT_CARD}/:cardId`} element={<EditCardPage />} />
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
       <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />

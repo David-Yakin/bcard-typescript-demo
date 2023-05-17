@@ -6,6 +6,7 @@ const ROUTES = {
   FAV_CARDS: "/fav-cards",
   CREATE_CARD: "/create-card",
   CARD_DETAILS: "/card-info",
+  EDIT_CARD: "/edit-card",
   SIGNUP: "/signup",
   LOGIN: "/login",
   USER_PROFILE: "/user-info",

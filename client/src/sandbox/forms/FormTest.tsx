@@ -45,15 +45,15 @@ const FormTest = () => {
           label="first name"
           name="first"
           data={value.data}
-          error={value.errors["first"]}
-          onInputChange={rest.handleChange}
+          error={value.errors.first}
+          onInputChange={rest.handleInputChange}
         />
         <Input
           label="last name"
           name="last"
           data={value.data}
           error={value.errors.last}
-          onInputChange={rest.handleChange}
+          onInputChange={rest.handleInputChange}
         />
       </Form>
     </Container>

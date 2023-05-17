@@ -33,7 +33,7 @@ const SignupPage = () => {
         onSubmit={rest.onSubmit}
         onReset={rest.handleReset}
         onFormChange={rest.validateForm}
-        onInputChange={rest.handleChange}
+        onInputChange={rest.handleInputChange}
         data={value.data}
         errors={value.errors}
         setData={rest.setData}
