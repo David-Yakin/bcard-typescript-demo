@@ -87,17 +87,26 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   try {
-    const { id } = req.params;
-    let user = req.body;
-    const { error } = validateUserUpdate(user);
+    const userId = req.params.id;
+    const user = req.user;
+
+    if (userId !== user._id)
+      return handleError(
+        res,
+        403,
+        "Authorization Error: You must be the registered user to update its  details"
+      );
+
+    const { error } = validateUserUpdate(req.body);
     if (error)
       return handleError(res, 400, `Joi Error: ${error.details[0].message}`);
 
-    user = normalizeUser(user);
-    user = await updateUser(id, user);
-    return res.send(user);
+    const normalizedUser = normalizeUser(req.body);
+    const newUser = await updateUser(userId, normalizedUser);
+
+    return res.send(newUser);
   } catch (error) {
     return handleError(res, error.status || 500, error.message);
   }
