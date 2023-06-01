@@ -94,7 +94,17 @@ const updateUser = async (userId, normalizedUser) => {
 const changeUserBusinessStatus = async userId => {
   if (DB === "MONGODB") {
     try {
-      return Promise.resolve(`user no. ${userId} change his business status!`);
+      const pipeline = [{ $set: { isBusiness: { $not: "$isBusiness" } } }];
+      const user = await User.findByIdAndUpdate(userId, pipeline, {
+        new: true,
+      }).select(["-password", "-__v"]);
+
+      if (!user)
+        throw new Error(
+          "Could not update this user isBusiness status because a user with this ID cannot be found in the database"
+        );
+
+      return Promise.resolve(user);
     } catch (error) {
       error.status = 400;
       return Promise.reject(error);
@@ -106,7 +116,16 @@ const changeUserBusinessStatus = async userId => {
 const deleteUser = async userId => {
   if (DB === "MONGODB") {
     try {
-      return Promise.resolve(`user no. ${userId} deleted!`);
+      const user = await User.findByIdAndDelete(userId, {
+        password: 0,
+        __v: 0,
+      });
+
+      if (!user)
+        throw new Error(
+          "Could not delete this user because a user with this ID cannot be found in the database"
+        );
+      return Promise.resolve(user);
     } catch (error) {
       error.status = 400;
       return Promise.reject(error);
