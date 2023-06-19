@@ -70,3 +70,14 @@ export const editCard = async (normalizedCard: NormalizedEditCard) => {
     if (axios.isAxiosError(error)) return Promise.reject(error.message);
   }
 };
+
+export const changeLikeStatus = async (cardId: string) => {
+  try {
+    const { data } = await axios.patch<CardInterface>(
+      `${apiUrl}/cards/${cardId}`
+    );
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) return Promise.reject(error.message);
+  }
+};

@@ -11,6 +11,7 @@ type CardsFeedbackProps = {
   error: string | null;
   cards: CardInterface[] | null;
   onDelete?: (id: string) => void;
+  onLike?: () => void;
 };
 
 const CardsFeedback: React.FC<CardsFeedbackProps> = ({
@@ -18,6 +19,7 @@ const CardsFeedback: React.FC<CardsFeedbackProps> = ({
   error,
   cards,
   onDelete = cardId => console.log("you deleted card: " + cardId),
+  onLike = () => {},
 }) => {
   if (isLoading) return <Spinner />;
   if (error) return <Error errorMessage={error} />;
@@ -28,7 +30,8 @@ const CardsFeedback: React.FC<CardsFeedbackProps> = ({
         parameters you entered!
       </Typography>
     );
-  if (cards && cards.length) return <Cards cards={cards} onDelete={onDelete} />;
+  if (cards && cards.length)
+    return <Cards cards={cards} onLike={onLike} onDelete={onDelete} />;
   return null;
 };
 

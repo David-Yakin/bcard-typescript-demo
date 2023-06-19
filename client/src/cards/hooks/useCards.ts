@@ -1,5 +1,6 @@
 import { useCallback, useState, useMemo } from "react";
 import {
+  changeLikeStatus,
   createCard,
   deleteCard,
   editCard,
@@ -19,6 +20,7 @@ import {
   CardMapToModelType,
 } from "../models/types/cardTypes";
 import normalizeEditCard from "../helpers/normalizations/normalizeEditCard";
+import { useUser } from "../../users/providers/UserProvider";
 
 type CardsType = null | CardInterface[];
 type CardType = null | CardInterface;
@@ -32,6 +34,7 @@ const useCards = () => {
 
   useAxios();
 
+  const { user } = useUser();
   const navigate = useNavigate();
   const snack = useSnack();
 
@@ -66,6 +69,19 @@ const useCards = () => {
       if (typeof error === "string") return requestStatus(false, error, null);
     }
   }, []);
+
+  const handleGetFavCards = useCallback(async () => {
+    try {
+      setLoading(true);
+      const cards = await getCards();
+      const favCards = cards.filter(
+        card => !!card.likes.find(id => id === user?._id)
+      );
+      requestStatus(false, null, favCards);
+    } catch (error) {
+      if (typeof error === "string") return requestStatus(false, error, null);
+    }
+  }, [user]);
 
   const handleGetCard = async (cardId: string) => {
     try {
@@ -120,6 +136,15 @@ const useCards = () => {
     []
   );
 
+  const handleLikeCard = useCallback(async (cardId: string) => {
+    try {
+      const card = await changeLikeStatus(cardId);
+      requestStatus(false, null, cards, card);
+    } catch (error) {
+      if (typeof error === "string") return requestStatus(false, error, null);
+    }
+  }, []);
+
   const value = useMemo(() => {
     return { isLoading, cards, card, error };
   }, [isLoading, cards, card, error]);
@@ -132,6 +157,8 @@ const useCards = () => {
     handleCreateCard,
     handleDeleteCard,
     handleUpdateCard,
+    handleLikeCard,
+    handleGetFavCards,
   };
 };
 
