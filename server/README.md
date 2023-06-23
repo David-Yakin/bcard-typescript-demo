@@ -286,6 +286,23 @@ In the request body you will need to provide an object with the following keys a
 
 - You will need to provide a token to get an answer from this api
 
+#### API for changing the business number
+
+```http
+	PATCH /api/cards/biz-number/:id
+```
+
+### Request
+
+In the request body you will need to provide an object with the following keys and values
+
+| index     | type   | min | max | remark   | from    | to      |
+| --------- | ------ | --- | --- | -------- | ------- | ------- |
+| bizNumber | number | 7   | 7   | required | 1000000 | 9999999 |
+
+- You will need to provide a token to get an answer from this api
+- You will need to be an admin type user to get an answer from this api
+
 #### API for deleting a business card
 
 ```http
