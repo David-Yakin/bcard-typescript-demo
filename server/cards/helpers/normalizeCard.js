@@ -1,4 +1,4 @@
-const generateBizNumber = require("./generateBizNumber");
+const { generateBizNumber } = require("./generateBizNumber");
 
 const normalizeCard = async (rawCard, userId) => {
   const { url, alt } = rawCard.image;

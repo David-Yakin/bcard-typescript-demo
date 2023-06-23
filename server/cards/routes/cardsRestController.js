@@ -10,8 +10,10 @@ const {
   updateCard,
   likeCard,
   deleteCard,
+  changeBizNumber,
 } = require("../models/cardsAccessDataService");
 const validateCard = require("../validations/cardValidationService");
+const { isBizNumberExists } = require("../helpers/generateBizNumber");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -82,6 +84,25 @@ router.put("/:id", auth, async (req, res) => {
 
     card = await normalizeCard(card);
     card = await updateCard(cardId, card);
+    return res.send(card);
+  } catch (error) {
+    return handleError(res, error.status || 500, error.message);
+  }
+});
+
+router.patch("/biz-number/:id", auth, async (req, res) => {
+  try {
+    const cardId = req.params.id;
+    const user = req.user;
+    const { bizNumber } = req.body;
+
+    if (!user.isAdmin)
+      throw new Error(
+        "Authorization Error: you must be an admin type user to change this business number"
+      );
+
+    await isBizNumberExists(bizNumber);
+    const card = await changeBizNumber(cardId, bizNumber);
     return res.send(card);
   } catch (error) {
     return handleError(res, error.status || 500, error.message);

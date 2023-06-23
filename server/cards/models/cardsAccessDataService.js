@@ -32,8 +32,9 @@ const getMyCards = async userId => {
 const getCard = async cardId => {
   if (DB === "MONGODB") {
     try {
-      let card = await Card.findById(cardId);
+      const card = await Card.findById(cardId);
       if (!card) throw new Error("Could not find this card in the database");
+
       return Promise.resolve(card);
     } catch (error) {
       error.status = 404;
@@ -76,10 +77,27 @@ const updateCard = async (cardId, normalizedCard) => {
   return Promise.resolve("card updateCard not in mongodb");
 };
 
+const changeBizNumber = async (cardId, bizNumber) => {
+  try {
+    const card = await Card.findByIdAndUpdate(
+      cardId,
+      { bizNumber },
+      { new: true }
+    );
+
+    if (!card)
+      throw new Error("A card with this ID cannot be found in the database");
+
+    return Promise.resolve(card);
+  } catch (error) {
+    return handleBadRequest("Mongoose", error);
+  }
+};
+
 const likeCard = async (cardId, userId) => {
   if (DB === "MONGODB") {
     try {
-      let card = await Card.findById(cardId);
+      const card = await Card.findById(cardId);
       if (!card)
         throw new Error("A card with this ID cannot be found in the database");
 
@@ -87,14 +105,14 @@ const likeCard = async (cardId, userId) => {
 
       if (!cardLikes) {
         card.likes.push(userId);
-        card = await card.save();
-        return Promise.resolve(card);
+        const cardFromDB = await card.save();
+        return Promise.resolve(cardFromDB);
       }
 
       const cardFiltered = card.likes.filter(id => id !== userId);
       card.likes = cardFiltered;
-      card = await card.save();
-      return Promise.resolve(card);
+      const cardFromDB = await card.save();
+      return Promise.resolve(cardFromDB);
     } catch (error) {
       error.status = 400;
       return handleBadRequest("Mongoose", error);
@@ -106,19 +124,18 @@ const likeCard = async (cardId, userId) => {
 const deleteCard = async (cardId, user) => {
   if (DB === "MONGODB") {
     try {
-      let card = await Card.findById(cardId);
+      const card = await Card.findById(cardId);
 
       if (!card)
         throw new Error("A card with this ID cannot be found in the database");
 
-      if (!user.isAdmin && user._id !== card.user_id)
+      if (card.user_id != user._id)
         throw new Error(
           "Authorization Error: Only the user who created the business card or admin can delete this card"
         );
 
-      card = await Card.findByIdAndDelete(cardId);
-
-      return Promise.resolve(card);
+      const cardFromDB = await Card.findByIdAndDelete(cardId);
+      return Promise.resolve(cardFromDB);
     } catch (error) {
       error.status = 400;
       return handleBadRequest("Mongoose", error);
@@ -132,5 +149,6 @@ exports.getMyCards = getMyCards;
 exports.getCard = getCard;
 exports.createCard = createCard;
 exports.updateCard = updateCard;
+exports.changeBizNumber = changeBizNumber;
 exports.likeCard = likeCard;
 exports.deleteCard = deleteCard;

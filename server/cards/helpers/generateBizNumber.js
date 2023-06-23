@@ -16,4 +16,17 @@ const generateBizNumber = async () => {
   }
 };
 
-module.exports = generateBizNumber;
+const isBizNumberExists = async bizNumber => {
+  try {
+    if (typeof +bizNumber !== "number")
+      throw new Error("bizNumber must be a number");
+    const card = await Card.findOne({ bizNumber }, { bizNumber: 1, _id: 0 });
+    if (card) throw new Error("Card with this bizNumber already exists");
+    return bizNumber;
+  } catch (error) {
+    return handleBadRequest("isBizNumberExists", error);
+  }
+};
+
+exports.generateBizNumber = generateBizNumber;
+exports.isBizNumberExists = isBizNumberExists;
